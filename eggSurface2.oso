@@ -1,0 +1,674 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.11.0@OPROJECT_VERSION_RELEASE_TYPE@
+# options: 
+shader eggSurface2
+param	color	Cin	0 0 0		%read{23,23} %write{2147483647,-1}
+oparam	color	Cout	0 0 0		%read{37,220} %write{23,220}
+global	point	P	%read{165,165} %write{2147483647,-1}
+global	float	u	%read{2,148} %write{2147483647,-1}
+global	float	v	%read{30,154} %write{2147483647,-1}
+local	float	freq	%read{2,2} %write{0,0}
+local	float	freq2	%read{6,6} %write{1,1}
+local	float	fuzz	%read{28,29} %write{5,5}
+local	float	fuzz2	%read{31,32} %write{9,9}
+local	float	inLine	%read{36,220} %write{34,34}
+local	color	white	%read{36,36} %write{10,10}
+local	color	yellow	%read{35,162} %write{11,11}
+local	color	lighterYellow	%read{2147483647,-1} %write{12,12}
+local	float	band1	%read{17,27} %write{13,21}
+local	float	bandwidth1	%read{24,26} %write{22,22}
+local	float	start	%read{28,29} %write{25,25}
+local	float	end	%read{31,32} %write{27,27}
+local	color	mixed_color	%read{37,37} %write{36,36}
+local	float	___325_theta	%read{71,138} %write{71,138}
+local	float	___325_s	%read{71,138} %write{71,138}
+local	float	___325_c	%read{71,138} %write{71,138}
+local	vector	___325_v	%read{71,138} %write{71,138}
+local	float	___325_distance	%read{71,138} %write{71,138}
+local	float	density	%read{54,54} %write{38,38}
+local	float	scale	%read{55,68} %write{39,39}
+local	float	scratchLength	%read{58,58} %write{40,40}
+local	float	scratchWidth	%read{71,138} %write{41,41}
+local	float	hardScratches	%read{71,138} %write{42,42}
+local	float	roughness_default	%read{49,138} %write{43,43}
+local	float	roughness_min	%read{71,138} %write{44,44}
+local	float	roughness_max	%read{71,138} %write{45,45}
+local	float	anisotropic_min	%read{71,138} %write{46,46}
+local	float	anisotropic_max	%read{71,138} %write{47,47}
+local	int	seed	%read{71,138} %write{48,48}
+local	float	roughness	%read{2147483647,-1} %write{49,138}
+local	float	anisotropy	%read{2147483647,-1} %write{50,138}
+local	float	rotation	%read{71,139} %write{51,138}
+local	float	scratch	%read{71,138} %write{52,138}
+local	color	scratchColor	%read{139,139} %write{53,138}
+local	float	___326_delta	%read{61,138} %write{57,57}
+local	int	___326_max_search_cell	%read{70,138} %write{59,59}
+local	point	___326_index	%read{71,138} %write{66,66}
+local	point	___326_shading_p	%read{71,138} %write{68,68}
+local	int	___327_x	%read{71,138} %write{70,138}
+local	int	___329_y	%read{71,138} %write{71,138}
+local	point	___330_line_cell_index	%read{71,138} %write{71,138}
+local	point	___330_scratch_origin_p	%read{71,138} %write{71,138}
+local	float	___330_dist	%read{71,138} %write{71,138}
+local	float	___330_width	%read{71,138} %write{71,138}
+local	color	___326_outsideLine	%read{140,140} %write{139,139}
+local	float	fizz2	%read{158,159} %write{143,143}
+local	float	s2	%read{155,155} %write{148,148}
+local	float	t2	%read{155,155} %write{153,153}
+local	point	centre2	%read{157,157} %write{154,154}
+local	point	here2	%read{157,157} %write{155,155}
+local	float	radius2	%read{158,159} %write{156,156}
+local	float	dist2	%read{160,160} %write{157,157}
+local	float	inDisk2	%read{163,163} %write{161,161}
+local	point	UVW	%read{174,174} %write{165,165}
+local	float	Scale	%read{174,174} %write{166,166}
+local	float	Radius	%read{178,220} %write{167,167}
+local	int	RandomOverlap	%read{178,220} %write{168,168}
+local	float	BumpAmount	%read{178,220} %write{169,169}
+local	float	BumpShape	%read{178,220} %write{170,170}
+local	color	red	%read{178,220} %write{171,171}
+local	float	Bump	%read{2147483647,-1} %write{172,220}
+local	float	Dist	%read{178,220} %write{173,220}
+local	point	pnt	%read{178,220} %write{174,174}
+local	float	pri	%read{178,220} %write{175,175}
+local	float	___335_x	%read{178,220} %write{177,220}
+local	float	___337_y	%read{178,220} %write{178,220}
+local	float	___339_z	%read{178,220} %write{178,220}
+local	point	___340_rndpoint	%read{178,220} %write{178,220}
+local	point	___340_dotcenter	%read{178,220} %write{178,220}
+local	float	___340_dist	%read{178,220} %write{178,220}
+local	float	___340_priority	%read{178,220} %write{178,220}
+const	int	$const1	100		%read{0,0} %write{2147483647,-1}
+const	int	$const2	101		%read{1,1} %write{2147483647,-1}
+const	float	$const3	0.00600000005		%read{5,9} %write{2147483647,-1}
+temp	float	$tmp1	%read{4,4} %write{3,3}
+const	string	$const4	"uperlin"		%read{3,7} %write{2147483647,-1}
+temp	float	$tmp2	%read{3,3} %write{2,2}
+const	float	$const5	0.00200000009		%read{4,8} %write{2147483647,-1}
+temp	float	$tmp3	%read{5,5} %write{4,4}
+temp	float	$tmp4	%read{8,8} %write{7,7}
+temp	float	$tmp5	%read{7,7} %write{6,6}
+temp	float	$tmp6	%read{9,9} %write{8,8}
+const	string	$const6	"rgb"		%read{10,171} %write{2147483647,-1}
+const	int	$const7	1		%read{40,186} %write{2147483647,-1}
+const	float	$const8	1		%read{10,220} %write{2147483647,-1}
+const	float	$const9	0.649999976		%read{11,11} %write{2147483647,-1}
+const	float	$const10	0.349999994		%read{11,11} %write{2147483647,-1}
+const	float	$const11	0.100000001		%read{11,44} %write{2147483647,-1}
+const	float	$const12	0.75		%read{12,12} %write{2147483647,-1}
+const	float	$const13	0.449999988		%read{12,154} %write{2147483647,-1}
+const	float	$const14	0.200000003		%read{12,156} %write{2147483647,-1}
+temp	float	$tmp7	%read{16,16} %write{15,15}
+const	string	$const15	"perlin"		%read{15,19} %write{2147483647,-1}
+temp	float	$tmp8	%read{15,15} %write{14,14}
+const	float	$const17	5		%read{14,14} %write{2147483647,-1}
+const	float	$const18	0.00499999989		%read{16,191} %write{2147483647,-1}
+temp	float	$tmp9	%read{17,17} %write{16,16}
+temp	float	$tmp10	%read{20,20} %write{19,19}
+temp	float	$tmp11	%read{19,19} %write{18,18}
+const	float	$const20	15		%read{18,18} %write{2147483647,-1}
+temp	float	$tmp12	%read{21,21} %write{20,20}
+temp	float	$tmp13	%read{25,25} %write{24,24}
+const	float	$const22	2		%read{24,195} %write{2147483647,-1}
+temp	float	$tmp14	%read{27,27} %write{26,26}
+temp	float	$tmp15	%read{34,34} %write{30,30}
+temp	float	$tmp16	%read{30,30} %write{28,28}
+temp	float	$tmp17	%read{30,30} %write{29,29}
+temp	float	$tmp18	%read{34,34} %write{33,33}
+temp	float	$tmp19	%read{33,33} %write{31,31}
+temp	float	$tmp20	%read{33,33} %write{32,32}
+const	float	$const23	2.5		%read{35,35} %write{2147483647,-1}
+temp	color	$tmp21	%read{36,36} %write{35,35}
+const	int	$const24	13		%read{38,38} %write{2147483647,-1}
+const	float	$const25	0.5		%read{39,209} %write{2147483647,-1}
+const	float	$const26	0.800000012		%read{41,83} %write{2147483647,-1}
+const	float	$const27	0.300000012		%read{42,45} %write{2147483647,-1}
+const	float	$const28	0		%read{43,171} %write{2147483647,-1}
+const	int	$const29	12345		%read{48,48} %write{2147483647,-1}
+const	int	$const30	0		%read{50,212} %write{2147483647,-1}
+temp	float	$tmp22	%read{57,57} %write{56,56}
+temp	float	$tmp23	%read{55,55} %write{54,54}
+temp	float	$tmp24	%read{56,56} %write{55,55}
+temp	float	$tmp25	%read{59,59} %write{58,58}
+temp	float	$tmp26	%read{66,66} %write{62,62}
+temp	float	$tmp27	%read{61,61} %write{60,60}
+temp	float	$tmp28	%read{62,62} %write{61,61}
+temp	float	$tmp29	%read{66,66} %write{65,65}
+temp	float	$tmp30	%read{64,64} %write{63,63}
+temp	float	$tmp31	%read{65,65} %write{64,64}
+temp	point	$tmp32	%read{68,68} %write{67,67}
+temp	int	$tmp33	%read{71,138} %write{71,138}
+temp	int	$tmp34	%read{69,138} %write{70,138}
+temp	int	$tmp35	%read{71,138} %write{71,138}
+temp	int	$tmp36	%read{71,138} %write{71,138}
+temp	point	$tmp37	%read{71,138} %write{71,138}
+temp	float	$tmp38	%read{71,138} %write{71,138}
+temp	float	$tmp39	%read{71,138} %write{71,138}
+temp	vector	$tmp40	%read{71,138} %write{71,138}
+temp	point	$tmp41	%read{71,138} %write{71,138}
+temp	point	$tmp42	%read{71,138} %write{71,138}
+temp	point	$tmp43	%read{71,138} %write{71,138}
+temp	vector	$tmp44	%read{71,138} %write{71,138}
+temp	point	$tmp45	%read{71,138} %write{71,138}
+temp	point	$tmp46	%read{71,138} %write{71,138}
+temp	point	$tmp47	%read{71,138} %write{71,138}
+const	float	$const31	0.879999995		%read{90,90} %write{2147483647,-1}
+temp	point	$tmp48	%read{71,138} %write{71,138}
+temp	vector	$tmp49	%read{71,138} %write{71,138}
+const	string	$const32	"lineDistance"		%read{93,93} %write{2147483647,-1}
+const	float	$const33	6.28318548		%read{94,94} %write{2147483647,-1}
+const	int	$const34	-1		%read{96,185} %write{2147483647,-1}
+temp	float	$tmp50	%read{71,138} %write{71,138}
+temp	vector	$tmp51	%read{71,138} %write{71,138}
+temp	point	$tmp52	%read{71,138} %write{71,138}
+temp	float	$tmp53	%read{71,138} %write{71,138}
+temp	point	$tmp54	%read{71,138} %write{71,138}
+temp	point	$tmp55	%read{71,138} %write{71,138}
+const	float	$const35	0.888000011		%read{106,106} %write{2147483647,-1}
+temp	point	$tmp56	%read{71,138} %write{71,138}
+temp	float	$tmp57	%read{71,138} %write{71,138}
+const	float	$const37	2048		%read{109,109} %write{2147483647,-1}
+temp	int	$tmp58	%read{71,138} %write{71,138}
+temp	float	$tmp59	%read{71,138} %write{71,138}
+temp	float	$tmp60	%read{71,138} %write{71,138}
+temp	float	$tmp61	%read{71,138} %write{71,138}
+temp	int	$tmp62	%read{71,138} %write{71,138}
+const	color	$const38	1 1 1		%read{119,119} %write{2147483647,-1}
+temp	float	$tmp63	%read{71,138} %write{71,138}
+temp	float	$tmp64	%read{71,138} %write{71,138}
+temp	point	$tmp65	%read{71,138} %write{71,138}
+temp	point	$tmp66	%read{71,138} %write{71,138}
+const	float	$const39	0.888800025		%read{122,122} %write{2147483647,-1}
+temp	point	$tmp67	%read{71,138} %write{71,138}
+temp	int	$tmp68	%read{71,138} %write{71,138}
+temp	float	$tmp69	%read{71,138} %write{71,138}
+temp	float	$tmp70	%read{71,138} %write{71,138}
+temp	point	$tmp71	%read{71,138} %write{71,138}
+temp	point	$tmp72	%read{71,138} %write{71,138}
+const	float	$const40	0.888880014		%read{129,129} %write{2147483647,-1}
+temp	point	$tmp73	%read{71,138} %write{71,138}
+temp	int	$tmp74	%read{71,138} %write{71,138}
+temp	color	$tmp75	%read{142,142} %write{141,141}
+temp	color	$tmp76	%read{141,141} %write{140,140}
+const	float	$const41	0.0199999996		%read{143,143} %write{2147483647,-1}
+const	string	$const42	"mod"		%read{144,149} %write{2147483647,-1}
+temp	float	$tmp77	%read{147,147} %write{146,146}
+temp	float	$tmp78	%read{146,146} %write{145,145}
+temp	float	$tmp79	%read{148,148} %write{147,147}
+temp	float	$tmp80	%read{152,152} %write{151,151}
+temp	float	$tmp81	%read{151,151} %write{150,150}
+temp	float	$tmp82	%read{153,153} %write{152,152}
+temp	float	$tmp83	%read{161,161} %write{160,160}
+temp	float	$tmp84	%read{160,160} %write{158,158}
+temp	float	$tmp85	%read{160,160} %write{159,159}
+const	float	$const43	1.5		%read{162,162} %write{2147483647,-1}
+temp	color	$tmp86	%read{163,163} %write{162,162}
+const	string	$const44	"object"		%read{165,165} %write{2147483647,-1}
+const	string	$const45	"transform"		%read{164,164} %write{2147483647,-1}
+const	string	$const46	"common"		%read{165,165} %write{2147483647,-1}
+const	float	$const47	0.00999999978		%read{166,166} %write{2147483647,-1}
+const	float	$const48	0.25		%read{167,167} %write{2147483647,-1}
+const	float	$const49	0.0125000002		%read{171,171} %write{2147483647,-1}
+temp	int	$tmp87	%read{178,220} %write{178,220}
+temp	int	$tmp88	%read{176,220} %write{177,220}
+temp	int	$tmp89	%read{178,220} %write{178,220}
+temp	int	$tmp90	%read{178,220} %write{178,220}
+temp	int	$tmp91	%read{178,220} %write{178,220}
+temp	int	$tmp92	%read{178,220} %write{178,220}
+temp	point	$tmp93	%read{178,220} %write{178,220}
+temp	point	$tmp94	%read{178,220} %write{178,220}
+temp	point	$tmp95	%read{178,220} %write{178,220}
+temp	vector	$tmp96	%read{178,220} %write{178,220}
+const	string	$const50	"cell"		%read{192,195} %write{2147483647,-1}
+temp	int	$tmp97	%read{178,220} %write{178,220}
+temp	int	$tmp98	%read{178,220} %write{178,220}
+temp	int	$tmp99	%read{178,220} %write{178,220}
+temp	int	$tmp100	%read{178,220} %write{178,220}
+temp	float	$tmp101	%read{178,220} %write{178,220}
+temp	float	$tmp102	%read{178,220} %write{178,220}
+temp	float	$tmp103	%read{178,220} %write{178,220}
+const	float	$const51	1.20000005		%read{205,205} %write{2147483647,-1}
+temp	float	$tmp104	%read{178,220} %write{178,220}
+temp	color	$tmp105	%read{178,220} %write{178,220}
+temp	float	$tmp106	%read{178,220} %write{178,220}
+temp	int	$tmp107	%read{178,220} %write{178,220}
+temp	float	$tmp108	%read{2147483647,-1} %write{178,220}
+temp	float	$tmp109	%read{2147483647,-1} %write{178,220}
+temp	float	$tmp110	%read{2147483647,-1} %write{178,220}
+code ___main___
+# eggSurface2.osl:6
+# 	float freq=100;
+	assign		freq $const1 	%filename{"eggSurface2.osl"} %line{6} %argrw{"wr"}
+# eggSurface2.osl:7
+# 	float freq2=101;
+	assign		freq2 $const2 	%line{7} %argrw{"wr"}
+# eggSurface2.osl:8
+# 	float fuzz=0.006+noise("uperlin",u*freq)*0.002;
+	mul		$tmp2 u freq 	%line{8} %argrw{"wrr"}
+	noise		$tmp1 $const4 $tmp2 	%argrw{"wrr"}
+	mul		$tmp3 $tmp1 $const5 	%argrw{"wrr"}
+	add		fuzz $const3 $tmp3 	%argrw{"wrr"}
+# eggSurface2.osl:9
+# 	float fuzz2=0.006+noise("uperlin",u*freq2)*0.002;
+	mul		$tmp5 u freq2 	%line{9} %argrw{"wrr"}
+	noise		$tmp4 $const4 $tmp5 	%argrw{"wrr"}
+	mul		$tmp6 $tmp4 $const5 	%argrw{"wrr"}
+	add		fuzz2 $const3 $tmp6 	%argrw{"wrr"}
+# eggSurface2.osl:11
+# 	color white=color("rgb", 1,1,1);
+	color		white $const6 $const8 $const8 $const8 	%line{11} %argrw{"wrrrr"}
+# eggSurface2.osl:12
+# 	color yellow=color("rgb", 0.65, 0.35, 0.1);
+	color		yellow $const6 $const9 $const10 $const11 	%line{12} %argrw{"wrrrr"}
+# eggSurface2.osl:13
+# 	color lighterYellow=color("rgb", 0.75, 0.45, 0.2);
+	color		lighterYellow $const6 $const12 $const13 $const14 	%line{13} %argrw{"wrrrr"}
+# eggSurface2.osl:20
+# 	float band1=0.45;
+	assign		band1 $const13 	%line{20} %argrw{"wr"}
+# eggSurface2.osl:21
+# 	band1+=noise("perlin",u*5)*0.005;
+	mul		$tmp8 u $const17 	%line{21} %argrw{"wrr"}
+	noise		$tmp7 $const15 $tmp8 	%argrw{"wrr"}
+	mul		$tmp9 $tmp7 $const18 	%argrw{"wrr"}
+	add		band1 band1 $tmp9 	%argrw{"wrr"}
+# eggSurface2.osl:22
+# 	band1+=noise("perlin",u*15)*0.005;
+	mul		$tmp11 u $const20 	%line{22} %argrw{"wrr"}
+	noise		$tmp10 $const15 $tmp11 	%argrw{"wrr"}
+	mul		$tmp12 $tmp10 $const18 	%argrw{"wrr"}
+	add		band1 band1 $tmp12 	%argrw{"wrr"}
+# eggSurface2.osl:23
+# 	float bandwidth1=0.1;
+	assign		bandwidth1 $const11 	%line{23} %argrw{"wr"}
+# eggSurface2.osl:25
+# 	Cout=Cin; 
+	assign		Cout Cin 	%line{25} %argrw{"wr"}
+# eggSurface2.osl:28
+# 	start=band1-bandwidth1/2;
+	div		$tmp13 bandwidth1 $const22 	%line{28} %argrw{"wrr"}
+	sub		start band1 $tmp13 	%argrw{"wrr"}
+# eggSurface2.osl:29
+# 	end=band1+bandwidth1/2;
+	div		$tmp14 bandwidth1 $const22 	%line{29} %argrw{"wrr"}
+	add		end band1 $tmp14 	%argrw{"wrr"}
+# eggSurface2.osl:30
+# 	inLine=smoothstep(start-fuzz,start+fuzz,v)-smoothstep(end-fuzz2,end+fuzz2,v);
+	sub		$tmp16 start fuzz 	%line{30} %argrw{"wrr"}
+	add		$tmp17 start fuzz 	%argrw{"wrr"}
+	smoothstep	$tmp15 $tmp16 $tmp17 v 	%argrw{"wrrr"}
+	sub		$tmp19 end fuzz2 	%argrw{"wrr"}
+	add		$tmp20 end fuzz2 	%argrw{"wrr"}
+	smoothstep	$tmp18 $tmp19 $tmp20 v 	%argrw{"wrrr"}
+	sub		inLine $tmp15 $tmp18 	%argrw{"wrr"}
+# eggSurface2.osl:32
+# 	color mixed_color = mix(yellow*2.5, white, inLine);
+	mul		$tmp21 yellow $const23 	%line{32} %argrw{"wrr"}
+	mix		mixed_color $tmp21 white inLine 	%argrw{"wrrr"}
+# eggSurface2.osl:33
+# 	Cout=mix(Cout,mixed_color,inLine);
+	mix		Cout Cout mixed_color inLine 	%line{33} %argrw{"wrrr"}
+# eggSurface2.osl:83
+#     float density= 13;
+	assign		density $const24 	%line{83} %argrw{"wr"}
+# eggSurface2.osl:84
+#     float scale=0.5;
+	assign		scale $const25 	%line{84} %argrw{"wr"}
+# eggSurface2.osl:85
+#     float scratchLength=1;
+	assign		scratchLength $const7 	%line{85} %argrw{"wr"}
+# eggSurface2.osl:86
+#     float scratchWidth=0.8;
+	assign		scratchWidth $const26 	%line{86} %argrw{"wr"}
+# eggSurface2.osl:87
+#     float hardScratches=0.3;
+	assign		hardScratches $const27 	%line{87} %argrw{"wr"}
+# eggSurface2.osl:88
+#     float roughness_default = 0.0;
+	assign		roughness_default $const28 	%line{88} %argrw{"wr"}
+# eggSurface2.osl:89
+#     float roughness_min=0.1;
+	assign		roughness_min $const11 	%line{89} %argrw{"wr"}
+# eggSurface2.osl:90
+#     float roughness_max=0.3;
+	assign		roughness_max $const27 	%line{90} %argrw{"wr"}
+# eggSurface2.osl:91
+#     float anisotropic_min = 0.0;
+	assign		anisotropic_min $const28 	%line{91} %argrw{"wr"}
+# eggSurface2.osl:92
+#     float anisotropic_max = 0.2;
+	assign		anisotropic_max $const14 	%line{92} %argrw{"wr"}
+# eggSurface2.osl:93
+#     int seed=12345;
+	assign		seed $const29 	%line{93} %argrw{"wr"}
+# eggSurface2.osl:94
+#     float roughness = 0 + roughness_default;
+	add		roughness $const28 roughness_default 	%line{94} %argrw{"wrr"}
+# eggSurface2.osl:95
+#     float anisotropy = 0;
+	assign		anisotropy $const30 	%line{95} %argrw{"wr"}
+# eggSurface2.osl:96
+#     float rotation = 0;
+	assign		rotation $const30 	%line{96} %argrw{"wr"}
+# eggSurface2.osl:97
+#     float scratch = 0;
+	assign		scratch $const30 	%line{97} %argrw{"wr"}
+# eggSurface2.osl:98
+# 	color scratchColor = 0;
+	assign		scratchColor $const30 	%line{98} %argrw{"wr"}
+# eggSurface2.osl:101
+#     float delta = 1/max(density * density * scale, 0.5);
+	mul		$tmp23 density density 	%line{101} %argrw{"wrr"}
+	mul		$tmp24 $tmp23 scale 	%argrw{"wrr"}
+	max		$tmp22 $tmp24 $const25 	%argrw{"wrr"}
+	div		___326_delta $const8 $tmp22 	%argrw{"wrr"}
+# eggSurface2.osl:102
+#     int max_search_cell = (int)ceil(scratchLength);
+	ceil		$tmp25 scratchLength 	%line{102} %argrw{"wr"}
+	assign		___326_max_search_cell $tmp25 	%argrw{"wr"}
+# eggSurface2.osl:105
+#     point index = point(round(scale * u/delta), round(scale * v/delta), 0.0);
+	mul		$tmp27 scale u 	%line{105} %argrw{"wrr"}
+	div		$tmp28 $tmp27 ___326_delta 	%argrw{"wrr"}
+	round		$tmp26 $tmp28 	%argrw{"wr"}
+	mul		$tmp30 scale v 	%argrw{"wrr"}
+	div		$tmp31 $tmp30 ___326_delta 	%argrw{"wrr"}
+	round		$tmp29 $tmp31 	%argrw{"wr"}
+	point		___326_index $tmp26 $tmp29 $const28 	%argrw{"wrrr"}
+# eggSurface2.osl:106
+#     point shading_p = point(u, v , 0.0)*scale;
+	point		$tmp32 u v $const28 	%line{106} %argrw{"wrrr"}
+	mul		___326_shading_p $tmp32 scale 	%argrw{"wrr"}
+# eggSurface2.osl:108
+#     for (int x = -max_search_cell; x <= max_search_cell; ++x){
+	for		$tmp34 71 73 138 139 	%line{108} %argrw{"r"}
+	neg		___327_x ___326_max_search_cell 	%argrw{"wr"}
+	le		$tmp33 ___327_x ___326_max_search_cell 	%argrw{"wrr"}
+	neq		$tmp34 $tmp33 $const30 	%argrw{"wrr"}
+# eggSurface2.osl:109
+#         for (int y = -max_search_cell; y <= max_search_cell; ++y){
+	for		$tmp36 75 77 137 138 	%line{109} %argrw{"r"}
+	neg		___329_y ___326_max_search_cell 	%argrw{"wr"}
+	le		$tmp35 ___329_y ___326_max_search_cell 	%argrw{"wrr"}
+	neq		$tmp36 $tmp35 $const30 	%argrw{"wrr"}
+# eggSurface2.osl:112
+#             point line_cell_index = index + point(x, y, 0);
+	assign		$tmp38 ___327_x 	%line{112} %argrw{"wr"}
+	assign		$tmp39 ___329_y 	%argrw{"wr"}
+	point		$tmp37 $tmp38 $tmp39 $const28 	%argrw{"wrrr"}
+	add		___330_line_cell_index ___326_index $tmp37 	%argrw{"wrr"}
+# eggSurface2.osl:113
+#             point scratch_origin_p = (line_cell_index + (hashnoise(line_cell_index + seed + .8) - 0.5)) * delta;
+	assign		$tmp42 seed 	%line{113} %argrw{"wr"}
+	add		$tmp41 ___330_line_cell_index $tmp42 	%argrw{"wrr"}
+	add		$tmp43 $tmp41 $const26 	%argrw{"wrr"}
+	hashnoise	$tmp40 $tmp43 	%argrw{"wr"}
+	sub		$tmp44 $tmp40 $const25 	%argrw{"wrr"}
+	add		$tmp45 ___330_line_cell_index $tmp44 	%argrw{"wrr"}
+	mul		___330_scratch_origin_p $tmp45 ___326_delta 	%argrw{"wrr"}
+# eggSurface2.osl:114
+#             rotation = hashnoise(line_cell_index + seed + .88);
+	assign		$tmp47 seed 	%line{114} %argrw{"wr"}
+	add		$tmp46 ___330_line_cell_index $tmp47 	%argrw{"wrr"}
+	add		$tmp48 $tmp46 $const31 	%argrw{"wrr"}
+	hashnoise	rotation $tmp48 	%argrw{"wr"}
+# eggSurface2.osl:115
+#             float dist = lineDistance(scratch_origin_p - shading_p, rotation);
+	sub		$tmp49 ___330_scratch_origin_p ___326_shading_p 	%line{115} %argrw{"wrr"}
+	functioncall	$const32 104 	%argrw{"r"}
+# eggSurface2.osl:75
+#     float theta = direction * M_2PI;
+	mul		___325_theta rotation $const33 	%line{75} %argrw{"wrr"}
+# eggSurface2.osl:76
+#     float s = 0, c = -1;
+	assign		___325_s $const30 	%line{76} %argrw{"wr"}
+	assign		___325_c $const34 	%argrw{"wr"}
+# eggSurface2.osl:77
+#     sincos(theta, s, c);
+	sincos		___325_theta ___325_s ___325_c 	%line{77} %argrw{"rww"}
+# eggSurface2.osl:78
+#     vector v = vector(c,s,0);
+	vector		___325_v ___325_c ___325_s $const28 	%line{78} %argrw{"wrrr"}
+# eggSurface2.osl:79
+#     float distance = length(p - (v * dot(v, p)));
+	dot		$tmp50 ___325_v $tmp49 	%line{79} %argrw{"wrr"}
+	mul		$tmp51 ___325_v $tmp50 	%argrw{"wrr"}
+	sub		$tmp52 $tmp49 $tmp51 	%argrw{"wrr"}
+	length		___325_distance $tmp52 	%argrw{"wr"}
+# eggSurface2.osl:80
+#     return distance;
+	assign		___330_dist ___325_distance 	%line{80} %argrw{"wr"}
+# eggSurface2.osl:118
+#             float width = scratchWidth * hashnoise(line_cell_index + seed + .888) / 2048;
+	assign		$tmp55 seed 	%line{118} %argrw{"wr"}
+	add		$tmp54 ___330_line_cell_index $tmp55 	%argrw{"wrr"}
+	add		$tmp56 $tmp54 $const35 	%argrw{"wrr"}
+	hashnoise	$tmp53 $tmp56 	%argrw{"wr"}
+	mul		$tmp57 scratchWidth $tmp53 	%argrw{"wrr"}
+	div		___330_width $tmp57 $const37 	%argrw{"wrr"}
+# eggSurface2.osl:121
+#             if (hardScratches) {
+	neq		$tmp58 hardScratches $const28 	%line{121} %argrw{"wrr"}
+	if		$tmp58 114 117 	%argrw{"r"}
+# eggSurface2.osl:122
+#                 scratch = 1 - step(width, dist);
+	step		$tmp59 ___330_width ___330_dist 	%line{122} %argrw{"wrr"}
+	sub		scratch $const8 $tmp59 	%argrw{"wrr"}
+# eggSurface2.osl:125
+#                 scratch = 1 - min(dist / width, 1);
+	div		$tmp61 ___330_dist ___330_width 	%line{125} %argrw{"wrr"}
+	min		$tmp60 $tmp61 $const8 	%argrw{"wrr"}
+	sub		scratch $const8 $tmp60 	%argrw{"wrr"}
+# eggSurface2.osl:128
+#             if (scratch)
+	neq		$tmp62 scratch $const28 	%line{128} %argrw{"wrr"}
+	if		$tmp62 136 137 	%argrw{"r"}
+# eggSurface2.osl:130
+# 				scratchColor = color(1,1,1);
+	assign		scratchColor $const38 	%line{130} %argrw{"wr"}
+# eggSurface2.osl:133
+#                         mix(roughness_min, roughness_max, hashnoise(line_cell_index + seed + .8888)),
+	assign		$tmp66 seed 	%line{133} %argrw{"wr"}
+	add		$tmp65 ___330_line_cell_index $tmp66 	%argrw{"wrr"}
+	add		$tmp67 $tmp65 $const39 	%argrw{"wrr"}
+	hashnoise	$tmp64 $tmp67 	%argrw{"wr"}
+	mix		$tmp63 roughness_min roughness_max $tmp64 	%argrw{"wrrr"}
+# eggSurface2.osl:134
+#                         scratch > 0
+	gt		$tmp68 scratch $const30 	%line{134} %argrw{"wrr"}
+# eggSurface2.osl:131
+#                 roughness = select(
+	select		roughness roughness_default $tmp63 $tmp68 	%line{131} %argrw{"wrrr"}
+# eggSurface2.osl:138
+#                         mix(anisotropic_min, anisotropic_max, hashnoise(line_cell_index + seed + .88888)),
+	assign		$tmp72 seed 	%line{138} %argrw{"wr"}
+	add		$tmp71 ___330_line_cell_index $tmp72 	%argrw{"wrr"}
+	add		$tmp73 $tmp71 $const40 	%argrw{"wrr"}
+	hashnoise	$tmp70 $tmp73 	%argrw{"wr"}
+	mix		$tmp69 anisotropic_min anisotropic_max $tmp70 	%argrw{"wrrr"}
+# eggSurface2.osl:139
+#                         scratch > 0
+	gt		$tmp74 scratch $const30 	%line{139} %argrw{"wrr"}
+# eggSurface2.osl:136
+#                 anisotropy = select(
+	select		anisotropy $const28 $tmp69 $tmp74 	%line{136} %argrw{"wrrr"}
+# eggSurface2.osl:141
+#                 rotation *= scratch;
+	mul		rotation rotation scratch 	%line{141} %argrw{"wrr"}
+# eggSurface2.osl:142
+#                 return;
+	exit	%line{142}
+# eggSurface2.osl:145
+# 				scratchColor = Cout;
+	assign		scratchColor Cout 	%line{145} %argrw{"wr"}
+# eggSurface2.osl:109
+#         for (int y = -max_search_cell; y <= max_search_cell; ++y){
+	add		___329_y ___329_y $const7 	%line{109} %argrw{"wrr"}
+# eggSurface2.osl:108
+#     for (int x = -max_search_cell; x <= max_search_cell; ++x){
+	add		___327_x ___327_x $const7 	%line{108} %argrw{"wrr"}
+# eggSurface2.osl:152
+# 	color outsideLine = mix(Cout,scratchColor,rotation);
+	mix		___326_outsideLine Cout scratchColor rotation 	%line{152} %argrw{"wrrr"}
+# eggSurface2.osl:153
+# 	Cout = mix(Cout, outsideLine*2, (inLine))*0.5;
+	mul		$tmp76 ___326_outsideLine $const22 	%line{153} %argrw{"wrr"}
+	mix		$tmp75 Cout $tmp76 inLine 	%argrw{"wrrr"}
+	mul		Cout $tmp75 $const25 	%argrw{"wrr"}
+# eggSurface2.osl:157
+# 	float fizz2 = 0.02;
+	assign		fizz2 $const41 	%line{157} %argrw{"wr"}
+# eggSurface2.osl:159
+# 	float s2=mod(u,1);
+	functioncall	$const42 149 	%line{159} %argrw{"r"}
+# /opt/pixar/RenderManProServer-25.2/lib/osl/include/stdosl.h:154
+# float  mod (float  a, float  b) { return a - b*floor(a/b); }
+	div		$tmp78 u $const8 	%filename{"/opt/pixar/RenderManProServer-25.2/lib/osl/include/stdosl.h"} %line{154} %argrw{"wrr"}
+	floor		$tmp77 $tmp78 	%argrw{"wr"}
+	mul		$tmp79 $const8 $tmp77 	%argrw{"wrr"}
+	sub		s2 u $tmp79 	%argrw{"wrr"}
+# eggSurface2.osl:160
+# 	float t2=mod(v,1);
+	functioncall	$const42 154 	%filename{"eggSurface2.osl"} %line{160} %argrw{"r"}
+# /opt/pixar/RenderManProServer-25.2/lib/osl/include/stdosl.h:154
+# float  mod (float  a, float  b) { return a - b*floor(a/b); }
+	div		$tmp81 v $const8 	%filename{"/opt/pixar/RenderManProServer-25.2/lib/osl/include/stdosl.h"} %line{154} %argrw{"wrr"}
+	floor		$tmp80 $tmp81 	%argrw{"wr"}
+	mul		$tmp82 $const8 $tmp80 	%argrw{"wrr"}
+	sub		t2 v $tmp82 	%argrw{"wrr"}
+# eggSurface2.osl:162
+# 	point centre2=point (0.2,0.45,v);
+	point		centre2 $const14 $const13 v 	%filename{"eggSurface2.osl"} %line{162} %argrw{"wrrr"}
+# eggSurface2.osl:163
+# 	point here2=point(s2,t2,0);
+	point		here2 s2 t2 $const28 	%line{163} %argrw{"wrrr"}
+# eggSurface2.osl:164
+# 	float radius2=0.2;
+	assign		radius2 $const14 	%line{164} %argrw{"wr"}
+# eggSurface2.osl:165
+# 	float dist2 =distance(centre2,here2);
+	distance	dist2 centre2 here2 	%line{165} %argrw{"wrr"}
+# eggSurface2.osl:166
+# 	float inDisk2 = 1-smoothstep(radius2 - fizz2, radius2+fizz2, dist2);
+	sub		$tmp84 radius2 fizz2 	%line{166} %argrw{"wrr"}
+	add		$tmp85 radius2 fizz2 	%argrw{"wrr"}
+	smoothstep	$tmp83 $tmp84 $tmp85 dist2 	%argrw{"wrrr"}
+	sub		inDisk2 $const8 $tmp83 	%argrw{"wrr"}
+# eggSurface2.osl:168
+# 	Cout=mix(Cout,yellow*1.5,inDisk2);
+	mul		$tmp86 yellow $const43 	%line{168} %argrw{"wrr"}
+	mix		Cout Cout $tmp86 inDisk2 	%argrw{"wrrr"}
+# eggSurface2.osl:178
+# 	point UVW    = transform("object", P);
+	functioncall	$const45 166 	%line{178} %argrw{"r"}
+# /opt/pixar/RenderManProServer-25.2/lib/osl/include/stdosl.h:285
+# point  transform (string to, point p)  { return transform("common",to,p); }
+	transform	UVW $const46 $const44 P 	%filename{"/opt/pixar/RenderManProServer-25.2/lib/osl/include/stdosl.h"} %line{285} %argrw{"wrrr"}
+# eggSurface2.osl:179
+# 	float Scale  = 0.01;
+	assign		Scale $const47 	%filename{"eggSurface2.osl"} %line{179} %argrw{"wr"}
+# eggSurface2.osl:180
+# 	float Radius = 0.25;
+	assign		Radius $const48 	%line{180} %argrw{"wr"}
+# eggSurface2.osl:181
+# 	int   RandomOverlap = 0;
+	assign		RandomOverlap $const30 	%line{181} %argrw{"wr"}
+# eggSurface2.osl:182
+# 	float BumpAmount = 1.0;
+	assign		BumpAmount $const8 	%line{182} %argrw{"wr"}
+# eggSurface2.osl:183
+# 	float BumpShape  = 1.0;
+	assign		BumpShape $const8 	%line{183} %argrw{"wr"}
+# eggSurface2.osl:185
+# 	color red = color("rgb", 0.0125,0,0);
+	color		red $const6 $const49 $const28 $const28 	%line{185} %argrw{"wrrrr"}
+# eggSurface2.osl:186
+# 	float Bump   = 0;
+	assign		Bump $const30 	%line{186} %argrw{"wr"}
+# eggSurface2.osl:187
+# 	float Dist = 0;
+	assign		Dist $const30 	%line{187} %argrw{"wr"}
+# eggSurface2.osl:189
+#     point pnt = UVW / Scale;	
+	div		pnt UVW Scale 	%line{189} %argrw{"wrr"}
+# eggSurface2.osl:190
+# 	float pri = -1;
+	assign		pri $const34 	%line{190} %argrw{"wr"}
+# eggSurface2.osl:194
+#   	for (float x = -1; x <= 1; x++)
+	for		$tmp88 178 180 219 221 	%line{194} %argrw{"r"}
+	assign		___335_x $const34 	%argrw{"wr"}
+	le		$tmp87 ___335_x $const7 	%argrw{"wrr"}
+	neq		$tmp88 $tmp87 $const30 	%argrw{"wrr"}
+# eggSurface2.osl:196
+#     	for (float y = -1; y <= 1; y++)
+	for		$tmp90 182 184 217 219 	%line{196} %argrw{"r"}
+	assign		___337_y $const34 	%argrw{"wr"}
+	le		$tmp89 ___337_y $const7 	%argrw{"wrr"}
+	neq		$tmp90 $tmp89 $const30 	%argrw{"wrr"}
+# eggSurface2.osl:198
+# 			for(float z = -1; z <= 1; z++)
+	for		$tmp92 186 188 215 217 	%line{198} %argrw{"r"}
+	assign		___339_z $const34 	%argrw{"wr"}
+	le		$tmp91 ___339_z $const7 	%argrw{"wrr"}
+	neq		$tmp92 $tmp91 $const30 	%argrw{"wrr"}
+# eggSurface2.osl:204
+# 				point rndpoint = floor(pnt) + point(x, y, z) + 0.005;				
+	floor		$tmp93 pnt 	%line{204} %argrw{"wr"}
+	point		$tmp94 ___335_x ___337_y ___339_z 	%argrw{"wrrr"}
+	add		$tmp95 $tmp93 $tmp94 	%argrw{"wrr"}
+	add		___340_rndpoint $tmp95 $const18 	%argrw{"wrr"}
+# eggSurface2.osl:206
+# 				point dotcenter = rndpoint + noise("cell", rndpoint, 1);				      
+	noise		$tmp96 $const50 ___340_rndpoint $const8 	%line{206} %argrw{"wrrr"}
+	add		___340_dotcenter ___340_rndpoint $tmp96 	%argrw{"wrr"}
+# eggSurface2.osl:207
+# 				float dist      = distance(dotcenter, pnt);
+	distance	___340_dist ___340_dotcenter pnt 	%line{207} %argrw{"wrr"}
+# eggSurface2.osl:210
+# 				float priority = noise("cell", rndpoint, 2);
+	noise		___340_priority $const50 ___340_rndpoint $const22 	%line{210} %argrw{"wrrr"}
+# eggSurface2.osl:213
+# 				if (dist < Radius && priority > pri)
+	lt		$tmp97 ___340_dist Radius 	%line{213} %argrw{"wrr"}
+	neq		$tmp98 $tmp97 $const30 	%argrw{"wrr"}
+	if		$tmp98 202 202 	%argrw{"r"}
+	gt		$tmp99 ___340_priority pri 	%argrw{"wrr"}
+	neq		$tmp100 $tmp99 $const30 	%argrw{"wrr"}
+	assign		$tmp98 $tmp100 	%argrw{"wr"}
+	if		$tmp98 215 215 	%argrw{"r"}
+# eggSurface2.osl:215
+# 					Dist   = dist / Radius;
+	div		Dist ___340_dist Radius 	%line{215} %argrw{"wrr"}
+# eggSurface2.osl:216
+# 					Bump   = pow(sin((1.0 - Dist) * 1.2), BumpShape) * BumpAmount;
+	sub		$tmp103 $const8 Dist 	%line{216} %argrw{"wrr"}
+	mul		$tmp104 $tmp103 $const51 	%argrw{"wrr"}
+	sin		$tmp102 $tmp104 	%argrw{"wr"}
+	pow		$tmp101 $tmp102 BumpShape 	%argrw{"wrr"}
+	mul		Bump $tmp101 BumpAmount 	%argrw{"wrr"}
+# eggSurface2.osl:221
+# 					Cout = mix(Cout, red*0.5, (1-inLine));
+	mul		$tmp105 red $const25 	%line{221} %argrw{"wrr"}
+	sub		$tmp106 $const8 inLine 	%argrw{"wrr"}
+	mix		Cout Cout $tmp105 $tmp106 	%argrw{"wrrr"}
+# eggSurface2.osl:223
+# 					if (!RandomOverlap)
+	eq		$tmp107 RandomOverlap $const30 	%line{223} %argrw{"wrr"}
+	if		$tmp107 215 215 	%argrw{"r"}
+# eggSurface2.osl:224
+# 						return;
+	exit	%line{224}
+# eggSurface2.osl:198
+# 			for(float z = -1; z <= 1; z++)
+	assign		$tmp108 ___339_z 	%line{198} %argrw{"wr"}
+	add		___339_z ___339_z $const8 	%argrw{"wrr"}
+# eggSurface2.osl:196
+#     	for (float y = -1; y <= 1; y++)
+	assign		$tmp109 ___337_y 	%line{196} %argrw{"wr"}
+	add		___337_y ___337_y $const8 	%argrw{"wrr"}
+# eggSurface2.osl:194
+#   	for (float x = -1; x <= 1; x++)
+	assign		$tmp110 ___335_x 	%line{194} %argrw{"wr"}
+	add		___335_x ___335_x $const8 	%argrw{"wrr"}
+	end

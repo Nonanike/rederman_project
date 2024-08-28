@@ -1,0 +1,127 @@
+#min.rib - a minimal scene
+Display "egg.tiff" "file" "rgb"
+Format 1920 1080 1.0
+
+Hider "raytrace" "int incremental" [1] "int maxsamples" [10]
+PixelVariance 0.001
+Integrator "PxrDirectLighting" "integrator" 
+
+Projection "perspective" "fov" [40]
+
+
+WorldBegin
+    Translate 0 -1 4
+    Rotate -35 1 0 0 
+
+# Lights
+
+    AttributeBegin
+        TransformBegin
+            Rotate 15 0 0 1
+            Translate 0 1 0.5
+            Attribute "visibility" "int camera" [0]
+            Light "PxrSphereLight" "float intensity" [10] "float exposure" [0.3]  "float temperature" [5500]
+        TransformEnd
+        TransformBegin
+            Rotate -15 0 0 1
+            Translate 0 1.5 0
+            Attribute "visibility" "int camera" [0]
+            Light "PxrSphereLight" "float intensity" [12] "float exposure" [0.3]  "float temperature" [2500]
+        TransformEnd
+        TransformBegin
+            Rotate -330 0 1 0
+            Rotate -90 1 0 0 
+                Light "PxrDomeLight" "theLight" "float intensity" [0.75] "float exposure" [0.4] "float temperature" [2500] "string lightColorMap" ["Maps/studio_loft.tx"]
+        TransformEnd
+    AttributeEnd
+
+# Table
+
+    AttributeBegin
+
+        Pattern "wood" "woodShader"
+	    Bxdf "PxrDisney" "wood" "reference color baseColor" ["woodShader:Cout"] "float subsurface" [0.45] "float roughness" [0.8] "float specular" [0.1]
+
+        Attribute "displacementbound" "sphere" [0.2] "coordinatesystem" ["shader"]
+
+		    Displace "PxrDisplace" "wood"
+			"float dispAmount" [ 0.001 ]
+			"reference float dispScalar" [ "woodShader:Bout" ]
+
+# Table geo
+        TransformBegin
+            Rotate 10 0 1 0
+            Rotate -90 0 1 0
+            Translate 0 -20.95 5
+            Rotate -90 1 0 0
+            Scale 20 20 20
+            Polygon "P" [-1 -1 1 1 -1 1 1 1 1 -1 1 1]
+        TransformEnd
+    AttributeEnd
+    
+# # Egg 2
+
+#     AttributeBegin
+#         Rotate 10 0 1 0
+#         Translate -2 0 1.5
+#         Rotate 90 0 0 1
+#         Rotate -4 0 0 1
+
+#         #Egg 2 shader surface
+
+#             Pattern "eggSurface2" "eggSurface2" "color Cin" [0.5 0.125 0.05]
+#             Bxdf "PxrDisney" "eggSurfaceShader2" "reference color baseColor" ["eggSurface2:Cout"] "float roughness" [0.55] "float specular" [0.2] "float subsurface" [0.2] "color subsurfaceColor" [0.5 0.125 0.05]
+
+#         #Egg shader displacement
+
+#             Attribute "displacementbound" "sphere" [0.2] "coordinatesystem" ["shader"]
+#             Pattern "eggDisplacement" "diskTx"
+# 		    Displace "PxrDisplace" "myDisp"
+# 			"float dispAmount" [ 0.05 ]
+# 			"reference float dispScalar" [ "diskTx:resultF" ]
+
+#     #Egg geo 2
+
+#         Rotate -90 1 0 0  
+
+#         TransformBegin
+#             Translate 0 0 0.25
+#             Scale 1 1 1.15
+#             Sphere 1 -1 1 360
+#         TransformEnd    
+#     AttributeEnd
+
+# -----------------------
+
+#  Egg 1
+
+    AttributeBegin
+        Rotate -10 0 1 0
+        Translate 0 0 2
+        Rotate -90 0 0 1
+        Rotate 4 0 0 1
+
+        #Egg shader surface
+
+            Pattern "eggSurface" "eggSurface" "color Cin" [0.5 0.125 0.05]
+            Bxdf "PxrDisney" "eggSurfaceShader" "reference color baseColor" ["eggSurface:Cout"] "float roughness" [0.55] "float specular" [0.2] "float subsurface" [0.2] "color subsurfaceColor" [0.5 0.125 0.05]
+
+        #Egg shader displacement
+
+            Attribute "displacementbound" "sphere" [0.2] "coordinatesystem" ["shader"]
+            Pattern "eggDisplacement" "diskTx"
+		    Displace "PxrDisplace" "myDisp"
+			"float dispAmount" [ 0.05 ]
+			"reference float dispScalar" [ "diskTx:resultF" ]
+
+#Egg geo
+
+        Rotate -90 1 0 0  
+
+        TransformBegin
+            Translate 0 0 0.25
+            Scale 1 1 1.15
+            Sphere 1 -1 1 360
+        TransformEnd    
+    AttributeEnd
+WorldEnd

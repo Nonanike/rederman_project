@@ -1,0 +1,9 @@
+shader wood (
+	color Cin=1,
+    output	color Cout=1,
+    output float Bout=1
+)
+{
+    Cout=(color)texture("Maps/Red_oak.tx",u*10,v*10);
+    Bout=(float)texture("Maps/Red_oak_bump.tx",u*10,v*10);
+}

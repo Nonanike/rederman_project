@@ -1,0 +1,224 @@
+shader eggSurface(
+	color Cin  = 0,
+	output	color Cout = 0
+)
+{
+	float freq=100;
+	float freq2=101;
+	float fuzz=0.006+noise("uperlin",u*freq)*0.002;
+	float fuzz2=0.006+noise("uperlin",u*freq2)*0.002;
+	float inLine;
+	color white=color("rgb", 1,1,1);
+	color yellow=color("rgb", 0.65, 0.35, 0.1);
+	color lighterYellow=color("rgb", 0.75, 0.45, 0.2);
+	float inDisk;
+	float dist;
+
+///---------------------------------------	
+///making thinner line 1
+
+	float band1=0.4;
+	band1+=noise("perlin",u*5)*0.005;
+	band1+=noise("perlin",u*15)*0.005;
+	float bandwidth1=0.045;
+	
+	Cout=Cin; 
+	
+	float start,end;
+	start=band1-bandwidth1/2;
+	end=band1+bandwidth1/2;
+	inLine=smoothstep(start-fuzz,start+fuzz,v)-smoothstep(end-fuzz2,end+fuzz2,v);
+
+	color mixed_color = mix(yellow*2.5, white, inLine);
+	Cout=mix(Cout,mixed_color,inLine);
+/// ---------------------------------------
+///making thicker line 2
+
+	float band2=0.55;
+	band2+=noise("perlin",u*5)*0.005;
+	band2+=noise("perlin",u*10)*0.005;
+	float bandwidth2=0.055;
+	 
+	float start2,end2;
+	start2=band2-bandwidth2/2; 
+	end2=band2+bandwidth2/2;
+	float inLine2=smoothstep(start2-fuzz,start2+fuzz,v)-smoothstep(end2-fuzz2,end2+fuzz2,v);
+
+	color mixed_color2 = mix(yellow*2.5, white, inLine2);
+	Cout=mix(Cout,mixed_color2,inLine2);
+
+/// ----------------------------------------
+///making yellow patches on the white lines
+
+	float repeatCount=25;
+	float fizz = 0.05;
+
+	float s=mod(repeatCount*u,1);
+	float t=mod(repeatCount*v,1);
+	vector offset=(vector) noise("pnoise",repeatCount*u,repeatCount*v);
+    point centre=point (0.25,0.01,0);
+    point here=point (s,t,0);
+    dist=distance(centre+offset,here);
+    float radius=0.5;
+	float inSpots=1-smoothstep(radius-fizz,radius+fizz,dist);
+
+	color lineColor = mix(Cout,lighterYellow*0.85,inSpots);
+	Cout = mix(Cout, lineColor, inLine2);
+	Cout = mix(Cout, lineColor, inLine*0.5);
+
+///------------------------------------------------
+//Original code Micro Scratched Texture by John Su and Michael Abrahams
+//Modified by me
+//Avaiable from: https://github.com/redshift3d/RedshiftOSLShaders/blob/main/Scratches.osl
+/// --------------------------------------------------------
+
+    float lineDistance(point p, float direction){
+    float theta = direction * M_2PI;
+    float s = 0, c = -1;
+    sincos(theta, s, c);
+    vector v = vector(c,s,0);
+    float distance = length(p - (v * dot(v, p)));
+    return distance;
+    }
+
+    float density= 13;
+    float scale=0.5;
+    float scratchLength=1;
+    float scratchWidth=0.8;
+    float hardScratches=0.3;
+    float roughness_default = 0.0;
+    float roughness_min=0.1;
+    float roughness_max=0.3;
+    float anisotropic_min = 0.0;
+    float anisotropic_max = 0.2;
+    int seed=12345;
+    float roughness = 0 + roughness_default;
+    float anisotropy = 0;
+    float rotation = 0;
+    float scratch = 0;
+	color scratchColor = 0;
+
+{
+    float delta = 1/max(density * density * scale, 0.5);
+    int max_search_cell = (int)ceil(scratchLength);
+
+    // Scale works by changing the uv coordinates
+    point index = point(round(scale * u/delta), round(scale * v/delta), 0.0);
+    point shading_p = point(u, v , 0.0)*scale;
+
+    for (int x = -max_search_cell; x <= max_search_cell; ++x){
+        for (int y = -max_search_cell; y <= max_search_cell; ++y){
+
+            // Distance from line in neighbor cell
+            point line_cell_index = index + point(x, y, 0);
+            point scratch_origin_p = (line_cell_index + (hashnoise(line_cell_index + seed + .8) - 0.5)) * delta;
+            rotation = hashnoise(line_cell_index + seed + .88);
+            float dist = lineDistance(scratch_origin_p - shading_p, rotation);
+
+            // Randomize width
+            float width = scratchWidth * hashnoise(line_cell_index + seed + .888) / 2048;
+
+            // hard = 0-1 step function; soft = linear gradient
+            if (hardScratches) {
+                scratch = 1 - step(width, dist);
+            }
+            else {
+                scratch = 1 - min(dist / width, 1);
+            }
+
+            if (scratch)
+            {
+				scratchColor = color(1,1,1);
+                roughness = select(
+                        roughness_default,
+                        mix(roughness_min, roughness_max, hashnoise(line_cell_index + seed + .8888)),
+                        scratch > 0
+                );
+                anisotropy = select(
+                        0,
+                        mix(anisotropic_min, anisotropic_max, hashnoise(line_cell_index + seed + .88888)),
+                        scratch > 0
+                );
+                rotation *= scratch;
+                return;
+            }
+			else{
+				scratchColor = Cout;
+			}
+        }
+    }
+
+	rotation = smoothstep(1,1, rotation);
+	float inLines = inLine + inLine2;
+	color outsideLines = mix(Cout,scratchColor,rotation);
+	Cout = mix(Cout, outsideLines*2, (inLines))*0.5;
+	}
+///----------------------------------------------------------
+
+///making the discoloured patch on the little end of the egg
+
+	float fizz2 = 0.02;
+
+	float s2=mod(u,1);
+	float t2=mod(v,1);
+	
+	point centre2=point (0.2,0.45,v);
+	point here2=point(s2,t2,0);
+	float radius2=0.2;
+	float dist2 =distance(centre2,here2);
+	float inDisk2 = 1-smoothstep(radius2 - fizz2, radius+fizz2, dist2);
+
+	Cout=mix(Cout,yellow*1.5,inDisk2);
+
+///--------------------------------------------------------------------
+// Original code Dots.osl, by Zap Andersson
+// Modified by me
+// Avaiable from: https://github.com/redshift3d/RedshiftOSLShaders/blob/main/Dots.osl
+///--------------------------------------------------------------------
+
+	point UVW    = transform("object", P);
+	float Scale  = 0.01;
+	float Radius = 0.25;
+	int   RandomOverlap = 0;
+	float BumpAmount = 1.0;
+	float BumpShape  = 1.0;
+
+	color darkDots = color("rgb", 0.0125, 0, 0);
+	float Bump   = 0;
+	float Dist = 0;
+
+    point pnt = UVW / Scale;	
+	float pri = -1;
+  
+  	for (float x = -1; x <= 1; x++)
+	{
+    	for (float y = -1; y <= 1; y++)
+		{
+			for(float z = -1; z <= 1; z++)
+			{
+
+				point rndpoint = floor(pnt) + point(x, y, z) + 0.005;				
+
+				point dotcenter = rndpoint + noise("cell", rndpoint, 1);				      
+				float dist      = distance(dotcenter, pnt);
+
+				float priority = noise("cell", rndpoint, 2);
+
+				if (dist < Radius && priority > pri)
+				{
+					Dist   = dist / Radius;
+					Bump   = pow(sin((1.0 - Dist) * 1.2), BumpShape) * BumpAmount;
+
+
+					float inLines = inLine + inLine2;
+					color outsideLines = mix(Cout,darkDots,Bump);
+					Cout = mix(Cout, darkDots*0.5, (1-inLines));
+					
+					if (!RandomOverlap)
+						return;
+				}
+			}
+		}
+	}
+}
+

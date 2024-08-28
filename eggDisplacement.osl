@@ -1,0 +1,75 @@
+shader eggDisplacement (
+    output	float resultF=0
+    // output float mag=0
+)
+{
+/// -------------------------------------------------
+///making little end
+
+    float littleEnd = smoothstep(0.001,0.49,v);
+    float littleEndVal = mix(4, 0, littleEnd);
+
+    resultF += littleEndVal;
+
+/// -------------------------------------------------
+// Original code Dots.osl, by  Zap Andersson
+// Modified by me
+// Available from: https://github.com/redshift3d/RedshiftOSLShaders/blob/main/Dots.osl
+///--------------------------------------------------
+/// dots 
+
+    point UVW    = transform("object", P);
+	float Scale  = 0.01;
+	float Radius = 0.3;
+	int   RandomOverlap = 0;
+	float BumpAmount = 1.0;
+	float BumpShape  = 1.0;
+    float Dots=0;
+
+	float Dist = 0;
+
+    point pnt = UVW / Scale;	
+	float pri = -1;
+  
+  	for (float x = -1; x <= 1; x++)
+	{
+    	for (float y = -1; y <= 1; y++)
+		{
+			for(float z = -1; z <= 1; z++)
+			{
+
+				point rndpoint = floor(pnt) + point(x, y, z) + 0.001;				
+
+				point dotcenter = rndpoint + noise("cell", rndpoint, 1);				      
+				float dist      = distance(dotcenter, pnt);
+
+				float priority = noise("cell", rndpoint, 2);
+
+				if (dist < Radius && priority > pri)
+				{
+					pri = priority;
+                    Dist   = dist / Radius;
+					Dots = pow(sin((1.0 - Dist) * 1.58), BumpShape) * BumpAmount*0.04;
+                    
+                    resultF += -Dots;
+
+					if (!RandomOverlap)
+						return;
+				}
+
+                if (dist < Radius && priority > pri)
+				{
+					pri = priority;
+                    Dist   = dist / Radius;
+					Dots = pow(sin((1.0 - Dist) * 1.58), BumpShape) * BumpAmount*0.03;
+                    
+                    resultF += Dots;
+
+					if (!RandomOverlap)
+						return;
+				}
+			}
+		}
+	}
+/// --------------------------------------------------------------------
+}

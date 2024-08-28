@@ -1,0 +1,185 @@
+it_Session {-vers 2} {
+  # saved on: 11:56:10 21/05/24 2024
+  # for: s5325378
+  # by: it 25.2 (@2282507 Jun 25 2023)
+  CatalogList {} {
+    Catalog {-name Catalog1} {
+      Viewspec {} {
+        channelView c
+        colorSpace Automatic
+        colorTransform sRGB
+        correctionMode 0
+        pan {52.869019 -353.201416}
+        zoomFactor 0.676303
+      }
+      SequenceInfo {} {
+        frameRange {1 0}
+        currentFrame 1
+      }
+      ImageList {} {
+        ImageElement {-handle e0 -isSequence 0 -filename session5.Contents/egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1976041 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e1 -isSequence 0 -filename session5.Contents/v1-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1977497 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e2 -isSequence 0 -filename session5.Contents/v2-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1977784 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e3 -isSequence 0 -filename session5.Contents/v3-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1978112 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e4 -isSequence 0 -filename session5.Contents/v4-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1978417 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e5 -isSequence 0 -filename session5.Contents/v5-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1979170 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e6 -isSequence 0 -filename session5.Contents/v6-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1980175 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e7 -isSequence 0 -filename session5.Contents/v7-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1984892 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e8 -isSequence 0 -filename session5.Contents/v8-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1985208 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e9 -isSequence 0 -filename session5.Contents/v9-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1985517 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e10 -isSequence 0 -filename session5.Contents/v10-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1985950 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e11 -isSequence 0 -filename session5.Contents/v11-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1986251 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e12 -isSequence 0 -filename session5.Contents/v12-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1986582 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e13 -isSequence 0 -filename session5.Contents/v13-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1986848 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e14 -isSequence 0 -filename session5.Contents/v14-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1987425 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e15 -isSequence 0 -filename session5.Contents/v15-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1987723 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e16 -isSequence 0 -filename session5.Contents/v16-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1988068 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e18 -isSequence 0 -filename session5.Contents/v17-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1988747 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e17 -isSequence 0 -filename session5.Contents/v18-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1988407 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e19 -isSequence 0 -filename session5.Contents/v19-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1989034 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e20 -isSequence 0 -filename session5.Contents/v20-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1989372 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e21 -isSequence 0 -filename session5.Contents/v21-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1989812 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e22 -isSequence 0 -filename session5.Contents/v22-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1990125 -primary 1 -rozport -1 -livestatsport -1;}
+          useCustomView 0
+        }
+        ImageElement {-handle e23 -isSequence 0 -filename session5.Contents/v23-egg.tiff} {
+          statusMsg {1920x1080 3 channel 32bit float -1%}
+          notes {
+Render Time: 00:00:00}
+          dspyParams {; d_socket_ctx -id wg0404/1990478 -prima

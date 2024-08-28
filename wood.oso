@@ -1,0 +1,28 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.11.0@OPROJECT_VERSION_RELEASE_TYPE@
+# options: 
+shader wood
+param	color	Cin	1 1 1		%read{2147483647,-1} %write{2147483647,-1}
+oparam	color	Cout	1 1 1		%read{2147483647,-1} %write{2,2}
+oparam	float	Bout	1		%read{2147483647,-1} %write{5,5}
+global	float	u	%read{0,3} %write{2147483647,-1} %derivs
+global	float	v	%read{1,4} %write{2147483647,-1} %derivs
+const	string	$const1	"Maps/Red_oak.tx"		%read{2,2} %write{2147483647,-1}
+temp	float	$tmp1	%read{2,2} %write{0,0} %derivs
+const	float	$const3	10		%read{0,4} %write{2147483647,-1}
+temp	float	$tmp2	%read{2,2} %write{1,1} %derivs
+const	string	$const4	"Maps/Red_oak_bump.tx"		%read{5,5} %write{2147483647,-1}
+temp	float	$tmp3	%read{5,5} %write{3,3} %derivs
+temp	float	$tmp4	%read{5,5} %write{4,4} %derivs
+code ___main___
+# wood.osl:7
+#     Cout=(color)texture("Maps/Red_oak.tx",u*10,v*10);
+	mul		$tmp1 u $const3 	%filename{"wood.osl"} %line{7} %argrw{"wrr"}
+	mul		$tmp2 v $const3 	%argrw{"wrr"}
+	texture		Cout $const1 $tmp1 $tmp2 	%argrw{"wrrr"} %argderivs{2,3}
+# wood.osl:8
+#     Bout=(float)texture("Maps/Red_oak_bump.tx",u*10,v*10);
+	mul		$tmp3 u $const3 	%line{8} %argrw{"wrr"}
+	mul		$tmp4 v $const3 	%argrw{"wrr"}
+	texture		Bout $const4 $tmp3 $tmp4 	%argrw{"wrrr"} %argderivs{2,3}
+	end
